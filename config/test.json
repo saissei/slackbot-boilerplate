@@ -1,0 +1,6 @@
+{
+  "slack_config": {
+    "signingSecret": "signing_secret",
+    "token": "bot_user_token"
+  }
+}
