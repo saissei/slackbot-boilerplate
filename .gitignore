@@ -1,0 +1,10 @@
+node_modules/*
+logs/*
+*.log
+*.log*
+config/*
+.env
+!config/test.json
+!config/dfault.json
+dist/*
+dist

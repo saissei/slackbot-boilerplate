@@ -1,0 +1,37 @@
+{
+  "name": "slackbot-boilerplate",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx nodemon",
+    "start": "npx pm2 start pm2.config.json --env production",
+    "lint": "eslint 'src/**/*.ts{,x}' --fix",
+    "build": "gulp build",
+    "test": "npx jest test --no-cache --silent=false --verbose true --coverage"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/check-types": "7.3.1",
+    "@types/config": "0.0.36",
+    "@types/jest": "24.9.0",
+    "@typescript-eslint/eslint-plugin": "2.16.0",
+    "@typescript-eslint/parser": "2.16.0",
+    "@typescript-eslint/typescript-estree": "2.16.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.9.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "gulp": "4.0.2",
+    "gulp-nodemon": "2.4.2",
+    "gulp-plumber": "1.2.1",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1",
+    "ts-node": "8.6.2",
+    "typescript": "3.7.5"
+  },
+  "dependencies": {
+    "@slack/bolt": "1.5.0",
+    "config": "3.2.5",
+    "log4js": "6.1.0"
+  }
+}
