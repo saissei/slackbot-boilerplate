@@ -1,12 +1,20 @@
+import { Request, Response } from "express";
+import { Slack } from "interactor/Slack";
 import { VOUser } from "valueobject/VOUser";
-import { VOHomeApp } from "valueobject/VOHomeApp";
-import { HomeApp } from "presenter/HomeApp";
+const slack: Slack = Slack.instance;
 
 export class EventsHandler {
-  public static async home({type, user, channel, tab, text, subtype}: any): Promise<void> {
-    const inputUser: VOUser = VOUser.of(user);
-    const view: VOHomeApp = VOHomeApp.of(inputUser);
-    const appView: HomeApp = HomeApp.ofUser(inputUser);
-    await appView.displayHome(view);
+  public static async switcher(req: Request, res: Response): Promise<void> {
+    const {type, user, channel, tab, text, subtype} = req.body.event;
+    switch(type){
+      case 'app_home_opened': {
+        const vouser: VOUser = VOUser.of(user);
+        await slack.sendAppHome(vouser);
+        return;
+      }
+      default: {
+        return;
+      }
+    }
   }
 }

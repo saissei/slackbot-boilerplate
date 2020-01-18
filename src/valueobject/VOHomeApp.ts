@@ -1,14 +1,23 @@
-import { VOUser } from "./VOUser";
+import { VOUser } from './VOUser';
+import { VOConfig } from './VOConfig';
+
+type HOMECONFIG = {
+  token: string;
+  user_id: string;
+  view: string;
+};
 
 export class VOHomeApp {
-  private user: string;
-  public static of(user: VOUser): VOHomeApp {
-    return new VOHomeApp(user.toString());
+  private user: VOUser;
+  private config: VOConfig;
+  public static of(config: VOConfig, user: VOUser): VOHomeApp {
+    return new VOHomeApp(config, user);
   }
-  private constructor(user: string){
+  private constructor(config: VOConfig, user: VOUser){
     this.user = user;
+    this.config = config;
   }
-  public updateView(): string {
+  public updateView(): HOMECONFIG {
     const blocks = [
       {
         type: "section",
@@ -38,6 +47,11 @@ export class VOHomeApp {
       },
       blocks: blocks
     }
-    return JSON.stringify(view);
+    const hpmeApp: HOMECONFIG = {
+      token: this.config.extractToken(),
+      user_id: this.user.toString(),
+      view: JSON.stringify(view)
+    }
+    return hpmeApp;
   };
 }
