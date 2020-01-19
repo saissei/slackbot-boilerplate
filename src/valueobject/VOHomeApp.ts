@@ -1,5 +1,5 @@
 import { VOUser } from './VOUser';
-import { VOConfig } from './VOConfig';
+import { VOConfig } from './VOSlackConfig';
 
 type HOMECONFIG = {
   token: string;
@@ -20,22 +20,23 @@ export class VOHomeApp {
   public updateView(): HOMECONFIG {
     const blocks = [
       {
-        type: "section",
+        type: 'section',
         text: {
-          type: "mrkdwn",
-          text: "*Welcome!* \nThis is a home for Stickers app. You can add small notes here!"
+          type: 'mrkdwn',
+          text: '*Welcome!* \nThis is a home for Stickers app. You can add small notes here!'
         },
         accessory: {
-          type: "button",
-          action_id: "add_note",
+          type: 'button',
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          action_id: 'add_note',
           text: {
-            type: "plain_text",
-            text: "Add a Stickie"
+            type: 'plain_text',
+            text: 'Add a Stickie'
           }
         }
       },
       {
-        type: "divider"
+        type: 'divider'
       }
     ];
 
@@ -49,6 +50,7 @@ export class VOHomeApp {
     }
     const hpmeApp: HOMECONFIG = {
       token: this.config.extractToken(),
+      // eslint-disable-next-line @typescript-eslint/camelcase
       user_id: this.user.toString(),
       view: JSON.stringify(view)
     }

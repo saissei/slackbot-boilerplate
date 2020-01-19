@@ -1,12 +1,13 @@
-import config from 'config';
 import Log4js from 'log4js';
+import { VOLoggerConfig } from '../valueobject/VOLoggerConfig';
+
 
 class Logger {
   private log4js: Log4js.Log4js;
 
   public constructor() {
-    const configure: Log4js.Configuration = config.get<Log4js.Configuration>('log4js');
-    this.log4js = Log4js.configure(configure);
+    const _conf: Log4js.Configuration = VOLoggerConfig.of().toJSON();
+    this.log4js = Log4js.configure(_conf);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

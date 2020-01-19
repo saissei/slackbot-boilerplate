@@ -1,4 +1,4 @@
-import { Type } from "../types/Type";
+import { Type } from '../types/Type';
 
 export class VOUser {
   private user: string;

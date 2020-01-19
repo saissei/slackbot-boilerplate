@@ -4,7 +4,7 @@ import axios from 'axios';
 import logger from '../logger/LoggerBase';
 import { VOModal } from '../valueobject/VOModal';
 
-const url: string = 'https://slack.com/api'
+const url = 'https://slack.com/api'
 
 
 export class Modal {

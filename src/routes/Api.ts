@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { EventsHandler } from 'controller/routes-hander/EventsHandler';
-import { ActionsHandler } from 'controller/routes-hander/ActionsHandler';
+import { EventsHandler } from '../controller/routes-hander/EventsHandler';
+import { ActionsHandler } from '../controller/routes-hander/ActionsHandler';
 
 const router: express.Router = express.Router();
 // const slack: App = new Bolt(salckConfig);

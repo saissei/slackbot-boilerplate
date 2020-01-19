@@ -1,18 +1,9 @@
-import config from 'config';
-
-import { VOUser } from "../valueobject/VOUser";
-import { VOConfig } from '../valueobject/VOConfig';
-import { VOHomeApp } from "../valueobject/VOHomeApp";
-import { HomeApp } from "../presenter/HomeApp";
+import { VOUser } from '../valueobject/VOUser';
+import { VOConfig } from '../valueobject/VOSlackConfig';
+import { VOHomeApp } from '../valueobject/VOHomeApp';
+import { HomeApp } from '../presenter/HomeApp';
 import { Modal } from 'presenter/Modal';
 import { VOModal } from 'valueobject/VOModal';
-
-type SLACKCONFIG = {
-  signingSecret: string;
-  token: string;
-}
-
-const slackConfig: SLACKCONFIG = config.get('slack_config');
 
 export class Slack {
   private slackConfig: VOConfig;
@@ -25,7 +16,7 @@ export class Slack {
     return this._instance;
   }
   private constructor(){
-    this.slackConfig = VOConfig.of(slackConfig);
+    this.slackConfig = VOConfig.of();
   }
   public async sendAppHome(user: VOUser): Promise<void> {
     const view: VOHomeApp = VOHomeApp.of(this.slackConfig, user);

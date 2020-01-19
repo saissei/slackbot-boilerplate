@@ -1,4 +1,4 @@
-import { VOTriggerId } from "./VOTriggerId";
+import { VOTriggerId } from './VOTriggerId';
 
 type MODAL = {
   token?: string;
@@ -28,46 +28,46 @@ export class VOModal {
       },
       blocks: [
         {
-          "type": "input",
-          "block_id": "note01",
-          "label": {
-            "type": "plain_text",
-            "text": "Note"
+          'type': 'input',
+          'block_id': 'note01',
+          'label': {
+            'type': 'plain_text',
+            'text': 'Note'
           },
-          "element": {
-            "action_id": "content",
-            "type": "plain_text_input",
-            "placeholder": {
-              "type": "plain_text",
-              "text": "Take a note... "
+          'element': {
+            'action_id': 'content',
+            'type': 'plain_text_input',
+            'placeholder': {
+              'type': 'plain_text',
+              'text': 'Take a note... '
             },
-            "multiline": true
+            'multiline': true
           }
         },
         {
-          "type": "input",
-          "block_id": "note02",
-          "label": {
-            "type": "plain_text",
-            "text": "Color",
+          'type': 'input',
+          'block_id': 'note02',
+          'label': {
+            'type': 'plain_text',
+            'text': 'Color',
           },
-          "element": {
-            "type": "static_select",
-            "action_id": "color",
-            "options": [
+          'element': {
+            'type': 'static_select',
+            'action_id': 'color',
+            'options': [
               {
-                "text": {
-                  "type": "plain_text",
-                  "text": "yellow"
+                'text': {
+                  'type': 'plain_text',
+                  'text': 'yellow'
                 },
-                "value": "yellow"
+                'value': 'yellow'
               },
               {
-                "text": {
-                  "type": "plain_text",
-                  "text": "blue"
+                'text': {
+                  'type': 'plain_text',
+                  'text': 'blue'
                 },
-                "value": "blue"
+                'value': 'blue'
               }
             ]
           }
@@ -76,6 +76,7 @@ export class VOModal {
     };
 
     const args: MODAL = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       trigger_id: this.triggerId.toString(),
       view: JSON.stringify(modal)
     };
