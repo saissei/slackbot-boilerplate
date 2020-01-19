@@ -12,6 +12,7 @@ export class EventsHandler {
         return;
       }
       default:{
+        console.log(req.body.event)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const {type, user, channel, tab, text, subtype} = req.body.event;
         switch(type){
