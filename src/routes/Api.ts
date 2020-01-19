@@ -5,6 +5,10 @@ import { ActionsHandler } from '../controller/routes-hander/ActionsHandler';
 const router: express.Router = express.Router();
 // const slack: App = new Bolt(salckConfig);
 
+router.get('/health', (req: Request, res: Response) => {
+  res.sendStatus(200);
+})
+
 router.post('/slack/events', async(req: Request, res: Response) => {
     EventsHandler.switcher(req, res);
 });
