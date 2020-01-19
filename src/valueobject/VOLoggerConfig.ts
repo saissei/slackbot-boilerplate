@@ -9,7 +9,7 @@ export class VOLoggerConfig {
       _conf = config.get('log4js');
     }catch(err){
       require('dotenv').config();
-      _conf = JSON.parse(process.env.LoggerConfig);
+      _conf = JSON.parse(process.env.log4js);
     }
     return new VOLoggerConfig(_conf)
   }

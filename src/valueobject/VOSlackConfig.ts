@@ -14,7 +14,7 @@ export class VOConfig {
       _conf = config.get('slack_config');
     } catch(err) {
       require('dotenv').config();
-      _conf = JSON.parse(process.env.SlackConfig);
+      _conf = JSON.parse(process.env.slack_config);
     }
     if(Type.isPlainObject(_conf)){
       return new VOConfig(_conf);
