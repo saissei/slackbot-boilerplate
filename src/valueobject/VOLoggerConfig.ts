@@ -4,12 +4,13 @@ import Log4js from 'log4js';
 export class VOLoggerConfig {
   private _conf: Log4js.Configuration;
   public static of(): VOLoggerConfig {
-    let _conf: Log4js.Configuration = config.get('log4js');
-    if(_conf === undefined){
+    let _conf: Log4js.Configuration;
+    try{
+      _conf = config.get('log4js');
+    }catch(err){
       require('dotenv').config();
       _conf = JSON.parse(process.env.LoggerConfig);
     }
-    console.log(_conf);
     return new VOLoggerConfig(_conf)
   }
   private constructor(_conf: Log4js.Configuration){

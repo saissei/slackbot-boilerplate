@@ -10,8 +10,9 @@ export class VOConfig {
   private _conf: SLACKCONFIG;
   public static of(): VOConfig {
     let _conf: SLACKCONFIG;
-    _conf = config.get('slack_config');
-    if(_conf === undefined){
+    try{
+      _conf = config.get('slack_config');
+    } catch(err) {
       require('dotenv').config();
       _conf = JSON.parse(process.env.SlackConfig);
     }
