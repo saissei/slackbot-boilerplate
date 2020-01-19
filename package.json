@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "npx nodemon",
     "start-local": "npx pm2 start pm2.config.json --env production",
-    "start": "npx gulp build && now",
+    "start": "npx gulp build && node ./dist/server/www.js",
     "lint": "eslint 'src/**/*.ts{,x}' --fix",
     "build": "npx gulp build --output-dir public",
     "test": "npx jest test --no-cache --silent=false --verbose true --coverage"
