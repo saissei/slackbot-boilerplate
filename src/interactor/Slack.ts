@@ -23,6 +23,7 @@ export class Slack {
     await HomeApp.displayHome(view);
   }
   public async sendModal(modal: VOModal): Promise<void> {
+    modal.ofToken(this.slackConfig);
     await Modal.send(modal);
   }
 }

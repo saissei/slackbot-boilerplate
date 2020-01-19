@@ -1,4 +1,5 @@
 import { VOTriggerId } from './VOTriggerId';
+import { VOConfig } from './VOSlackConfig';
 
 type MODAL = {
   token?: string;
@@ -81,6 +82,10 @@ export class VOModal {
       view: JSON.stringify(modal)
     };
     this.modal = args;
+    return;
+  }
+  public ofToken(voconfig: VOConfig): VOModal {
+    this.modal.token = voconfig.extractToken();
     return;
   }
   public toJSON(): MODAL {

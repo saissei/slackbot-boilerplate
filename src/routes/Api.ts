@@ -13,7 +13,7 @@ router.post('/slack/events', async(req: Request, res: Response) => {
     EventsHandler.switcher(req, res);
 });
 
-router.post('/slack/actions', async(req: Request, res: Response) => {
+router.post('/slack/action', async(req: Request, res: Response) => {
   ActionsHandler.switcher(req, res);
 });
 

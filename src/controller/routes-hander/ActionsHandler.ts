@@ -24,7 +24,6 @@ export class ActionsHandler {
       return;
     }
 
-    /** Modalを開く */
     if(voActions.checkArraylength() === 0){
       return;
     }
@@ -32,7 +31,7 @@ export class ActionsHandler {
     const actionObject: any = voActions.extractObject();
 
     switch (actionObject.action_id) {
-      case '':{
+      case 'add_note':{
         voModal.stickieModal();
         await slack.sendModal(voModal);
         return;
