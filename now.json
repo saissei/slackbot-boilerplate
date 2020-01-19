@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "build": {
+    "env": {
+      "logger": "@logger",
+      "slack_config": "@slack_config"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ]
+}
