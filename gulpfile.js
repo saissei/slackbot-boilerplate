@@ -20,6 +20,16 @@ gulp.task("controller", () => {
     .pipe(gulp.dest("dist/controller"));
 });
 
+gulp.task("interactor", () => {
+  return gulp
+    .src(["src/interactor/**/*.ts"], {
+      since: gulp.lastRun("interactor")
+    })
+    .pipe(plumber())
+    .pipe(tsc())
+    .pipe(gulp.dest("dist/interactor"));
+});
+
 gulp.task("logger", () => {
   return gulp
     .src(["src/logger/**/*.ts"], {
@@ -47,7 +57,17 @@ gulp.task("repository", () => {
     })
     .pipe(plumber())
     .pipe(tsc())
-    .pipe(gulp.dest("dist/Repository"));
+    .pipe(gulp.dest("dist/repository"));
+});
+
+gulp.task("routes", () => {
+  return gulp
+    .src(["src/routes/**/*.ts"], {
+      since: gulp.lastRun("routes")
+    })
+    .pipe(plumber())
+    .pipe(tsc())
+    .pipe(gulp.dest("dist/routes"));
 });
 
 gulp.task("server", () => {
@@ -112,6 +132,7 @@ gulp.task(
   gulp.series(
     "clean",
     "controller",
+    "interactor",
     "logger",
     "presenter",
     "server",
@@ -126,6 +147,7 @@ gulp.task(
   "default",
   gulp.parallel("nodemon", callback => {
     gulp.watch("src/controller/**/*.ts", gulp.series("controller"));
+    gulp.watch("src/interactor/**/*.ts", gulp.series("interactor"));
     gulp.watch("src/logger/**/*.ts", gulp.series("logger"));
     gulp.watch("src/presenter/**/*.ts", gulp.series("presenter"));
     gulp.watch("src/repository/**/*.ts", gulp.series("repository"));

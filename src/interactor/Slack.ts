@@ -2,8 +2,8 @@ import { VOUser } from '../valueobject/VOUser';
 import { VOConfig } from '../valueobject/VOSlackConfig';
 import { VOHomeApp } from '../valueobject/VOHomeApp';
 import { HomeApp } from '../presenter/HomeApp';
-import { Modal } from 'presenter/Modal';
-import { VOModal } from 'valueobject/VOModal';
+import { Modal } from '../presenter/Modal';
+import { VOModal } from '../valueobject/VOModal';
 
 export class Slack {
   private slackConfig: VOConfig;

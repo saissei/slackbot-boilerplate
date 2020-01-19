@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npx nodemon",
-    "start": "npx pm2 start pm2.config.json --env production",
+    "start-local": "npx pm2 start pm2.config.json --env production",
+    "start": "npx gulp build && now",
     "lint": "eslint 'src/**/*.ts{,x}' --fix",
-    "build": "gulp build",
+    "build": "npx gulp build --output-dir public",
     "test": "npx jest test --no-cache --silent=false --verbose true --coverage"
   },
   "main": "index.js",
@@ -42,8 +43,10 @@
   "dependencies": {
     "@slack/bolt": "1.5.0",
     "axios": "0.19.1",
+    "check-types": "11.1.1",
     "config": "3.2.5",
     "dotenv": "8.2.0",
+    "helmet": "3.21.2",
     "log4js": "6.1.0",
     "moment-timezone": "0.5.27",
     "qs": "6.9.1"
