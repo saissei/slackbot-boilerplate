@@ -1,0 +1,46 @@
+{
+  "log4js": {
+    "appenders": {
+      "access": {
+        "type": "dateFile",
+        "filename": "./logs/access.log",
+        "daysToKeep": 7
+      },
+      "error": {
+        "type": "dateFile",
+        "filename": "./logs/error.log",
+        "daysToKeep": 7
+      },
+      "system": {
+        "type": "dateFile",
+        "filename": "./logs/system.log",
+        "daysToKeep": 7
+      },
+      "stdout": {
+        "type": "stdout"
+      }
+    },
+    "categories": {
+      "default": {
+        "appenders": ["access", "stdout"],
+        "level": "INFO"
+      },
+      "access": {
+        "appenders": ["access", "stdout"],
+        "level": "INFO"
+      },
+      "system": {
+        "appenders": ["system", "stdout"],
+        "level": "ALL"
+      },
+      "error": {
+        "appenders": ["error", "stdout"],
+        "level": "ERROR"
+      },
+      "debug": {
+        "appenders": ["stdout"],
+        "level": "ALL"
+      }
+    }
+  }
+}
