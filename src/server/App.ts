@@ -5,7 +5,7 @@ import  logger from '../logger/LoggerBase';
 import helmet from 'helmet';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const connectLogger: any = logger.connectLogger('INFO')
+const connectLogger: any = logger.connectLogger('INFO');
 
 import { router as apiRouter } from '../routes/Api';
 

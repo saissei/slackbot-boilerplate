@@ -2,7 +2,7 @@
   "name": "slackbot-boilerplate",
   "version": "1.0.0",
   "scripts": {
-    "dev": "npx nodemon",
+    "dev": "npx ts-node-dev ./src/server/www.ts",
     "start-local": "npx pm2 start pm2.config.json --env production",
     "start": "node ./dist/server/www.js",
     "lint": "eslint 'src/**/*.ts{,x}' --fix",
@@ -37,6 +37,7 @@
     "nodemon": "2.0.2",
     "prettier": "1.19.1",
     "ts-node": "8.6.2",
+    "ts-node-dev": "1.0.0-pre.44",
     "typescript": "3.7.5"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "helmet": "3.21.2",
     "log4js": "6.1.0",
     "moment-timezone": "0.5.27",
+    "monk": "7.1.2",
     "qs": "6.9.1"
   }
 }

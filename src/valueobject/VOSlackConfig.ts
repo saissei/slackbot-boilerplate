@@ -8,15 +8,18 @@ type SLACKCONFIG = {
 
 export class VOConfig {
   private _conf: SLACKCONFIG;
-  public static of(): VOConfig {
+  public static of(): VOConfig | undefined {
     let _conf: SLACKCONFIG;
-    try{
+    try {
       _conf = config.get('slack_config');
-    } catch(err) {
+    } catch (err) {
       require('dotenv').config();
+      if (!process.env.slack_config){
+        return;
+      }
       _conf = JSON.parse(process.env.slack_config);
     }
-    if(Type.isPlainObject(_conf)){
+    if (Type.isPlainObject(_conf)){
       return new VOConfig(_conf);
     }
     return;

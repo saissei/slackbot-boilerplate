@@ -12,7 +12,7 @@ class Logger {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public connectLogger(_level: string | undefined): any {
-    if(_level === undefined){
+    if (_level === undefined){
       _level = 'INFO';
     }
     return this.log4js.connectLogger(this.log4js.getLogger('access'), { level: _level });

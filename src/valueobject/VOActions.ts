@@ -4,8 +4,8 @@ import { Type } from '../types/Type';
 export class VOActions {
   private actions: Array<PlainObject>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static of(actions: Array<any>): VOActions {
-    if(Type.isArray(actions)){
+  public static of(actions: Array<any>): VOActions | undefined {
+    if (Type.isArray(actions)){
       return new VOActions(actions);
     }
     return;

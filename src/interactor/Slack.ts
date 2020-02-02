@@ -8,17 +8,25 @@ import { VOModal } from '../valueobject/VOModal';
 export class Slack {
   private slackConfig: VOConfig;
   private static _instance: Slack | null = null;
-  public static get instance(): Slack {
-    if(this._instance === null){
-      this._instance = new Slack();
+  public static get instance(): Slack | undefined {
+    if (this._instance === null){
+      const config: VOConfig | undefined = VOConfig.of();
+      if (!config){
+        return;
+      }
+      this._instance = new Slack(config);
       return this._instance;
     }
     return this._instance;
   }
-  private constructor(){
-    this.slackConfig = VOConfig.of();
+  private constructor(config: VOConfig){
+    this.slackConfig = config;
   }
   public async sendAppHome(user: VOUser): Promise<void> {
+    const view: VOHomeApp = VOHomeApp.of(this.slackConfig, user);
+    await HomeApp.displayHome(view);
+  }
+  public async updateAppHome(user: VOUser): Promise<void> {
     const view: VOHomeApp = VOHomeApp.of(this.slackConfig, user);
     await HomeApp.displayHome(view);
   }

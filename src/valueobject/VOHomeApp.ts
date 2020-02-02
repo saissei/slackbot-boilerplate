@@ -1,5 +1,6 @@
 import { VOUser } from './VOUser';
 import { VOConfig } from './VOSlackConfig';
+import moment from 'moment-timezone';
 
 type HOMECONFIG = {
   token: string;
@@ -18,25 +19,42 @@ export class VOHomeApp {
     this.config = config;
   }
   public updateView(): HOMECONFIG {
+    const today: string = moment().tz('Asia/tokyo').format('YYYY-MM-DD');
     const blocks = [
       {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: '*Welcome!* \nThis is a home for Stickers app. You can add small notes here!'
+        'type': 'section',
+        'text': {
+          'type': 'mrkdwn',
+          'text': '*Welcome!*\n\n'
         },
-        accessory: {
-          type: 'button',
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          action_id: 'add_note',
-          text: {
-            type: 'plain_text',
-            text: 'Add a Stickie'
+        'accessory': {
+          'type': 'button',
+          'action_id': 'add_note',
+          'text': {
+            'type': 'plain_text',
+            'text': 'Add a Stickie'
           }
         }
       },
       {
         type: 'divider'
+      },
+      {
+        'type': 'section',
+        'text': {
+          'type': 'mrkdwn',
+          'text': ' '
+        },
+        'accessory': {
+          'type': 'datepicker',
+          'initial_date': today,
+          'action_id': 'filter_date',
+          'placeholder': {
+            'type': 'plain_text',
+            'text': 'filter_date',
+            'emoji': true
+          }
+        }
       }
     ];
 
@@ -47,13 +65,13 @@ export class VOHomeApp {
         text: 'Keep notes!'
       },
       blocks: blocks
-    }
+    };
     const hpmeApp: HOMECONFIG = {
       token: this.config.extractToken(),
       // eslint-disable-next-line @typescript-eslint/camelcase
       user_id: this.user.toString(),
       view: JSON.stringify(view)
-    }
+    };
     return hpmeApp;
   };
 }

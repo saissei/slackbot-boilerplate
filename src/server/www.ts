@@ -3,53 +3,53 @@
 /**
  * Module dependencies.
  */
-import { default as app } from './App'
+import { default as app } from './App';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const debug = require('debug')('express-boilerplate-api:server')
-import * as http from 'http'
+const debug = require('debug')('express-boilerplate-api:server');
+import * as http from 'http';
 
 /**
  * Get port from environment and store in Express.
  */
 
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
-const port: string = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
+const port: string = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port)
+server.listen(port);
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
-server.on('error', onError)
+server.on('error', onError);
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
-server.on('listening', onListening)
+server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
 function normalizePort(val: any) {
-  const port = parseInt(val, 10)
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
-    return val
+    return val;
   }
 
   if (port >= 0) {
     // port number
-    return port
+    return port;
   }
 
-  return false
+  return false;
 }
 
 /**
@@ -58,7 +58,7 @@ function normalizePort(val: any) {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
 function onError(error: any) {
   if (error.syscall !== 'listen') {
-    throw error
+    throw error;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,15 +67,15 @@ function onError(error: any) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
-      process.exit(1)
-      break
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
-      process.exit(1)
-      break
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
     default:
-      throw error
+      throw error;
   }
 }
 
@@ -85,7 +85,7 @@ function onError(error: any) {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
 function onListening() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const addr: any = server.address()
-  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
-  debug('Listening on ' + bind)
+  const addr: any = server.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  debug('Listening on ' + bind);
 }

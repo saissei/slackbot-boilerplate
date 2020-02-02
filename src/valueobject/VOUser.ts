@@ -3,7 +3,7 @@ import { Type } from '../types/Type';
 export class VOUser {
   private user: string;
   public static of(user: string): VOUser {
-    if(!Type.isString(user)){
+    if (!Type.isString(user)){
       return;
     }
     return new VOUser(user);

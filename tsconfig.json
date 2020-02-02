@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
-    "target": "esnext",
     "module": "commonjs",
-    "lib": ["esnext"],
-    "noImplicitAny": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
-    "baseUrl": "./src",
-    "types": ["node", "jest"],
-    "esModuleInterop": true
+    "target": "esnext",
+    "strict": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext"],
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist", "node_modules", "*.test.ts", "**.js"],
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "public", "views"],
   "compileOnSave": false
 }
