@@ -1,8 +1,27 @@
 import { Slack } from '../../interactor/Slack';
 import { PlainObject } from '../../types/PlainObject';
 import { VOUser } from '../../valueobject/VOUser';
+import { VOMemo } from '../../valueobject/VOMemo';
+import { CommandMemo } from '../../repository/command/CommandMemo';
+import { VOCollection } from '../../valueobject/database/VOCollection';
 
 const slack: Slack | undefined = Slack.instance;
+const cmdMemo: CommandMemo = CommandMemo.instance;
+
+interface VALUEDATA {
+  type: string;
+  value: string;
+}
+
+interface VALUE {
+  data: VALUEDATA;
+}
+interface MODALVALUE {
+  title: VALUE;
+  url: VALUE;
+  description: VALUE;
+  memo: VALUE;
+}
 
 interface NOTE {
     type: string;
@@ -13,10 +32,10 @@ interface NOTE {
 }
 
 interface NOTESTATE {
-  values: PlainObject;
+  values: MODALVALUE;
 }
 
-interface SUBMITVIEW {
+export interface SUBMITVIEW {
   id: string;
   team_id: string;
   type: string;
@@ -42,10 +61,14 @@ export class SubmissionController {
       switch (callbackId){
         case 'add_note': {
           console.log(view.state.values);
-          console.log('addNote!');
-          if ( slack === undefined) {
+          if ( slack === undefined ) {
             return;
           }
+          console.log('addNote!');
+          const memo: VOMemo = VOMemo.of(view, vouser);
+          const collectionData: VOCollection = VOCollection.of(memo);
+          const commandResult = await cmdMemo.collect(collectionData);
+          console.log(commandResult);
           await slack.updateAppHome(vouser);
           return;
         }

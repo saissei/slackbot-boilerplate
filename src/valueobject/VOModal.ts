@@ -61,7 +61,27 @@ export class VOModal {
           },
           'hint': {
             'type': 'plain_text',
-            'text': 'メモしたいアドレスがあれば入力してください。'
+            'text': 'メモしたいアドレスがあれば入力してください。\nもしない場合、何か１文字だけ文字入力を行ってください。\n※http以外から始まった文字列はは記録されません'
+          }
+        },
+        {
+          'type': 'input',
+          'block_id': 'description',
+          'element': {
+            'type': 'plain_text_input',
+            'action_id': 'data',
+            'placeholder': {
+              'type': 'plain_text',
+              'text': ' '
+            }
+          },
+          'label': {
+            'type': 'plain_text',
+            'text': 'Description'
+          },
+          'hint': {
+            'type': 'plain_text',
+            'text': 'URLリンクやひとくちメモ'
           }
         },
         {

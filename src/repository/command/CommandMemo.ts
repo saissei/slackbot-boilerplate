@@ -30,11 +30,12 @@ export class CommandMemo {
     this.articles = articles;
   }
 
-  public async collect(data: VOCollection): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async collect(data: VOCollection): Promise<any> {
     const collectData: COLLECTED = data.toCollectData();
     try {
-      await this.articles.insert(collectData);
-      return;
+      const result = await this.articles.insert(collectData);
+      return result;
     } catch (err) {
       logger.systemError('erroe happened at collecton memo data');
       logger.systemError(err);

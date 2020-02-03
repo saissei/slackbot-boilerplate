@@ -32,6 +32,9 @@ export class Slack {
   }
   public async sendModal(modal: VOModal): Promise<void> {
     modal.ofToken(this.slackConfig);
-    await Modal.send(modal);
+    try {await Modal.send(modal);} catch (err) {
+      console.log(err);
+      return;
+    }
   }
 }

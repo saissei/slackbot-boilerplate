@@ -11,7 +11,7 @@ export class HomeApp {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   public static async displayHome(homeApp: VOHomeApp, data?: any): Promise<void> {
     try {
-      console.log(qs.stringify(homeApp.updateView()));
+      //console.log(qs.stringify(homeApp.updateView()));
       await axios.post(`${url}/views.publish`, qs.stringify(homeApp.updateView()));
       return;
     } catch (err) {

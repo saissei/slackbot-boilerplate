@@ -1,12 +1,13 @@
 import moment, { Moment } from 'moment-timezone';
+import { VOMemo } from '../VOMemo';
 
-export interface COLLECTED extends INDATA {
+export interface COLLECTED extends COLLECTIONDATA {
   timestamp: Moment;
   update: Moment;
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-export interface INDATA {
+export interface COLLECTIONDATA {
   space: string;
   userId: string;
   title: string;
@@ -19,11 +20,11 @@ export interface INDATA {
 }
 
 export class VOCollection {
-  private data: INDATA;
-  public static of(data: INDATA): VOCollection {
-    return new VOCollection(data);
+  private data: COLLECTIONDATA;
+  public static of(data: VOMemo): VOCollection {
+    return new VOCollection(data.toJson());
   }
-  private constructor(data: INDATA){
+  private constructor(data: COLLECTIONDATA){
     this.data = data;
   }
   public toCollectData(): COLLECTED {

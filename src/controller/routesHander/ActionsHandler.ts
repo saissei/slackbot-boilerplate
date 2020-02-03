@@ -31,7 +31,7 @@ export class ActionsHandler {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { user, view } = JSON.parse(req.body.payload);
-      res.sendStatus(200).end();
+      res.send('');
       const vouser: VOUser = VOUser.of(user.id);
       await SubmissionController.handle(vouser, view);
       // logger.systemInfo(view.state.values);
