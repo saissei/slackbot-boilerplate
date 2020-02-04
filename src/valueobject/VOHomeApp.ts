@@ -1,6 +1,7 @@
 import { VOUser } from './VOUser';
 import { VOConfig } from './VOSlackConfig';
 import moment from 'moment-timezone';
+import { VOAppHomeContent, BLOCKCONTENT } from './VOAppHomeContent';
 
 type HOMECONFIG = {
   token: string;
@@ -11,15 +12,18 @@ type HOMECONFIG = {
 export class VOHomeApp {
   private user: VOUser;
   private config: VOConfig;
-  public static of(config: VOConfig, user: VOUser): VOHomeApp {
-    return new VOHomeApp(config, user);
+  private content: VOAppHomeContent;
+  public static of(config: VOConfig, user: VOUser, homeContent: VOAppHomeContent): VOHomeApp {
+    return new VOHomeApp(config, user, homeContent);
   }
-  private constructor(config: VOConfig, user: VOUser){
+  private constructor(config: VOConfig, user: VOUser, homeContent: VOAppHomeContent){
     this.user = user;
     this.config = config;
+    this.content = homeContent;
   }
   public updateView(): HOMECONFIG {
     const today: string = moment().tz('Asia/tokyo').format('YYYY-MM-DD');
+    const contents: BLOCKCONTENT = this.content.toArray();
     const blocks = [
       {
         'type': 'section',
@@ -32,12 +36,9 @@ export class VOHomeApp {
           'action_id': 'add_note',
           'text': {
             'type': 'plain_text',
-            'text': 'Add a Stickie'
+            'text': 'New note'
           }
         }
-      },
-      {
-        type: 'divider'
       },
       {
         'type': 'section',
@@ -46,17 +47,37 @@ export class VOHomeApp {
           'text': ' '
         },
         'accessory': {
-          'type': 'datepicker',
-          'initial_date': today,
-          'action_id': 'filter_date',
-          'placeholder': {
+          'type': 'button',
+          'action_id': 'add_tag',
+          'text': {
             'type': 'plain_text',
-            'text': 'filter_date',
-            'emoji': true
+            'text': 'New tag'
           }
         }
+      },
+      {
+        type: 'divider'
+      },
+      {
+        'type': 'actions',
+        'elements': [
+          {
+            'type': 'datepicker',
+            'initial_date': today,
+            'action_id': 'filter_date',
+            'placeholder': {
+              'type': 'plain_text',
+              'text': 'filter_date',
+              'emoji': true
+            }
+          }
+        ]
       }
     ];
+
+    if (contents.length !== 0){
+      blocks.push(...contents);
+    }
 
     const view = {
       type: 'home',

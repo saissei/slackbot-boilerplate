@@ -1,5 +1,4 @@
 import moment, { Moment } from 'moment-timezone';
-import { VOMemo } from '../VOMemo';
 
 export interface COLLECTED extends COLLECTIONDATA {
   timestamp: Moment;
@@ -21,8 +20,8 @@ export interface COLLECTIONDATA {
 
 export class VOCollection {
   private data: COLLECTIONDATA;
-  public static of(data: VOMemo): VOCollection {
-    return new VOCollection(data.toJson());
+  public static of(data: COLLECTED): VOCollection {
+    return new VOCollection(data);
   }
   private constructor(data: COLLECTIONDATA){
     this.data = data;

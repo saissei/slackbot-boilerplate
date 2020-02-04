@@ -3,6 +3,7 @@ import monk, { ICollection } from 'monk';
 
 import { TAGS } from '../../valueobject/database/VODBTags';
 import logger from '../../logger/LoggerBase';
+import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
 
 
 interface DBCONFIG {
@@ -39,12 +40,13 @@ export class QueryTags {
   private constructor(articles: ICollection){
     this.articles = articles;
   }
-  public async extract(): Promise<Array<TAGS>> {
+  public async extract(spaceId: VOSpaceId): Promise<Array<TAGS>> {
     try {
-      const tag: Array<TAGS> = await this.articles.find();
+      const space: SPACEID = spaceId.toJson();
+      const tag: Array<TAGS> = await this.articles.find(space);
       return tag;
     } catch (err) {
-      logger.systemInfo('error happened at collect tag data');
+      logger.systemInfo('error happened at query tag data');
       logger.systemError(err);
       return [];
     }

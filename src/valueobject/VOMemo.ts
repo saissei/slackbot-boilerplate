@@ -1,31 +1,52 @@
-import { COLLECTIONDATA } from "./database/VOCollection";
-import { SUBMITVIEW } from "../controller/buttonHandler/SubmissionController";
-import { VOUser } from "./VOUser";
-import moment, { Moment } from 'moment-timezone';
+import { SUBMITVIEW } from '../controller/buttonHandler/SubmissionController';
+import { VOUser } from './VOUser';
+import moment from 'moment-timezone';
+import { VOUserName } from './VOUserName';
 
+export interface COLLECTED extends COLLECTIONDATA {
+  timestamp: string;
+  update: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface COLLECTIONDATA {
+  space: string;
+  userId: string;
+  userName: string;
+  title: string;
+  url: string;
+  tag: Array<string>;
+  description: string;
+  detail: string;
+  timestamp?: string;
+  update?: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
 interface INPUTMEMO extends COLLECTIONDATA {
-  timestamp: Moment,
-  update: Moment
+  timestamp: string;
+  update: string;
 }
 
 export class VOMemo {
   private memo: INPUTMEMO;
-  public static of(view: SUBMITVIEW, userId: VOUser): VOMemo {
+  public static of(view: SUBMITVIEW, userId: VOUser, userName: VOUserName): VOMemo {
     const viewData = view.state.values;
-    const now: Moment = moment().tz('Asia/tokyo');
+    const now: string = moment().tz('Asia/tokyo').toISOString();
     const httpRegex = new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$','i');
-    const url = () => {
+    const url = (): string => {
       if (httpRegex.test(viewData.url.data.value)) {
         return viewData.url.data.value;
       }
       return '';
-    }
+    };
     const memo: INPUTMEMO = {
       'space': view.team_id,
+      'userId': userId.toString(),
+      'userName': userName.toString(),
       'tag': [],
       'title': viewData.title.data.value,
       'url': url(),
-      'userId': userId.toString(),
       'description': viewData.description.data.value,
       'detail': viewData.memo.data.value,
       'timestamp': now,
