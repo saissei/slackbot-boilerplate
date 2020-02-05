@@ -1,6 +1,11 @@
 {
   "slack_config": {
-    "signingSecret": "signing_secret",
-    "token": "bot_user_token"
+    "signingSecret": "signingSecret",
+    "token": "token"
+  },
+  "database": {
+    "host": "hostname",
+    "port": "access port",
+    "database": "database name"
   }
 }

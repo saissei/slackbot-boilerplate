@@ -1,5 +1,5 @@
 {
-  "name": "slackbot-boilerplate",
+  "name": "slack-memo-bot",
   "version": "1.0.0",
   "scripts": {
     "dev": "npx ts-node-dev ./src/server/www.ts",
