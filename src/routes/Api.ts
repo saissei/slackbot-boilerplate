@@ -10,7 +10,7 @@ router.get('/health', (req: Request, res: Response) => {
 });
 
 router.post('/slack/events', async(req: Request, res: Response) => {
-    EventsHandler.switcher(req, res);
+  EventsHandler.switcher(req, res);
 });
 
 router.post('/slack/action', async(req: Request, res: Response) => {

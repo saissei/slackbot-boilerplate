@@ -21,7 +21,7 @@ export class VODateTime {
     const formatting = moment(this.timestamp).format('YYYY-MM-DD');
     return formatting;
   }
-  public toUpdateKeyValue(): UPDATEKEYVALUE {
+  public toKeyValue(): UPDATEKEYVALUE {
     const start: string = moment(this.timestamp).toISOString();
     const end: string= moment(this.timestamp).add(1, 'days').toISOString();
     const kv: UPDATEKEYVALUE = {
@@ -30,10 +30,11 @@ export class VODateTime {
         '$lte': end
       }
     };
+    console.log(kv);
     return kv;
   }
   public toISODate(): string {
-    const iso: string = moment(this.timestamp).tz('Asia/tokyo').toISOString();
+    const iso: string = moment(this.timestamp).toISOString();
     return iso;
   }
 }

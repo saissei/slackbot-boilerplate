@@ -34,7 +34,6 @@ export class CommandMemo {
     const collectData: COLLECTED = data.toJson();
     try {
       const result = await this.articles.insert(collectData);
-      console.log(result);
       return result;
     } catch (err) {
       logger.systemError('erroe happened at collecton memo data');

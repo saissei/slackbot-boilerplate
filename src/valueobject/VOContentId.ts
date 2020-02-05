@@ -13,6 +13,6 @@ export class VOContentId {
   public toKeyValue(): CONTENTID {
     return {
       _id: this.id
-    }
+    };
   }
 }

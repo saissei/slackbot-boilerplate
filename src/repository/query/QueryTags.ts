@@ -1,7 +1,6 @@
 import config from 'config';
 import monk, { ICollection } from 'monk';
 
-import { TAGS } from '../../valueobject/database/VODBTags';
 import logger from '../../logger/LoggerBase';
 import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
 
@@ -23,6 +22,14 @@ export interface OPTIONTAGS {
   value: string;
 }
 
+export interface COLLECTEDDBTAGS {
+  _id: string;
+  space: string;
+  tag: string;
+  timestamp: string;
+  update: string;
+}
+
 export class QueryTags {
   private articles: ICollection;
   private static _instance: QueryTags | null = null;
@@ -40,10 +47,10 @@ export class QueryTags {
   private constructor(articles: ICollection){
     this.articles = articles;
   }
-  public async extract(spaceId: VOSpaceId): Promise<Array<TAGS>> {
+  public async extract(spaceId: VOSpaceId): Promise<Array<COLLECTEDDBTAGS>> {
     try {
       const space: SPACEID = spaceId.toJson();
-      const tag: Array<TAGS> = await this.articles.find(space);
+      const tag: Array<COLLECTEDDBTAGS> = await this.articles.find(space);
       return tag;
     } catch (err) {
       logger.systemInfo('error happened at query tag data');

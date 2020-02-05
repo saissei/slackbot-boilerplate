@@ -1,7 +1,7 @@
 import { VOUser } from './VOUser';
 import { VOConfig } from './VOSlackConfig';
-import moment from 'moment-timezone';
 import { VOAppHomeContent, BLOCKCONTENT } from './VOAppHomeContent';
+import { VODateTime } from './VODateTime';
 
 type HOMECONFIG = {
   token: string;
@@ -21,8 +21,9 @@ export class VOHomeApp {
     this.config = config;
     this.content = homeContent;
   }
-  public updateView(): HOMECONFIG {
-    const today: string = moment().tz('Asia/tokyo').format('YYYY-MM-DD');
+  public updateView(setting: VODateTime): HOMECONFIG {
+
+    const initDate: string = setting.extractYearDate();
     const contents: BLOCKCONTENT = this.content.toArray();
     const blocks = [
       {
@@ -63,22 +64,20 @@ export class VOHomeApp {
         'elements': [
           {
             'type': 'datepicker',
-            'initial_date': today,
+            'initial_date': initDate,
             'action_id': 'filter_date',
             'placeholder': {
               'type': 'plain_text',
-              'text': 'filter_date',
+              'text': '日付',
               'emoji': true
             }
           }
         ]
       }
     ];
-
     if (contents.length !== 0){
       blocks.push(...contents);
     }
-
     const view = {
       type: 'home',
       title: {
@@ -87,6 +86,7 @@ export class VOHomeApp {
       },
       blocks: blocks
     };
+
     const hpmeApp: HOMECONFIG = {
       token: this.config.extractToken(),
       // eslint-disable-next-line @typescript-eslint/camelcase

@@ -1,8 +1,15 @@
 import { Request, Response } from 'express';
-import { Slack } from '../../interactor/Slack';
+import { Slack } from '../Slack';
 import { VOUser } from '../../valueobject/VOUser';
 import { VOSpaceId } from '../../valueobject/VOSpaceId';
+import { USERSETTINGS } from '../../valueobject/VOUserSettings';
+import { VODateTime } from '../../valueobject/VODateTime';
+import { QueryUserSettings } from '../../repository/query/QueryUserSettings';
+import logger from '../../logger/LoggerBase';
+import moment = require('moment-timezone');
+
 const slack: Slack | undefined = Slack.instance;
+const querySettings: QueryUserSettings = QueryUserSettings.instance;
 
 export class EventsHandler {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,15 +21,33 @@ export class EventsHandler {
       res.send({ challenge: req.body.challenge });
       return;
     }
-    console.log(req.body.event);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/camelcase
-    const { type, user, team_id }: { type: string; user: string; team_id: string } = req.body.event;
+    const { type, user, view } = req.body.event;
     switch (type){
       case 'app_home_opened': {
-        const vospace: VOSpaceId = VOSpaceId.of(team_id);
-        const vouser: VOUser = VOUser.of(user);
-        await slack.sendAppHome(vouser, vospace);
+        try {
+          if (view === undefined){
+            return;
+          }
+          const vospace: VOSpaceId = VOSpaceId.of(view.team_id);
+          const vouser: VOUser = VOUser.of(user);
+          const settings: Array<USERSETTINGS> = await querySettings.extract(vouser);
+          const newUserSetting: () => VODateTime = (): VODateTime => {
+            if (settings.length === 0){
+              const timestamp: string = moment().format('YYYY-MM-DD');
+              const vodate: VODateTime = VODateTime.of(timestamp);
+              return vodate;
+            }
+            const vodate: VODateTime = VODateTime.of(settings[0].filterDate);
+            return vodate;
+          };
+
+        await slack.sendAppHome(vouser, vospace, newUserSetting());
         return;
+      } catch (err) {
+          logger.systemError(err);
+          return;
+      }
       }
       default: {
         return;

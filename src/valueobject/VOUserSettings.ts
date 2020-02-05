@@ -1,6 +1,11 @@
-import { VOUser } from "./VOUser";
-import { VODateTime } from "./VODateTime";
-import moment = require("moment-timezone");
+import { VOUser } from './VOUser';
+import { VODateTime } from './VODateTime';
+import moment = require('moment-timezone');
+
+export interface USERSETTINGS {
+  userId: string;
+  filterDate: string;
+}
 
 export class VOUserSettings {
   private user: VOUser;
@@ -9,28 +14,30 @@ export class VOUserSettings {
     return new VOUserSettings(user, timestamp);
   }
   public static of(user: VOUser, timestamp?: VODateTime): VOUserSettings {
-    if(timestamp){
+    if (timestamp){
       return this.DATETIMEFILTER(user, timestamp);
     }
     return new VOUserSettings(user);
   }
   private constructor(user: VOUser, timestamp?: VODateTime){
     this.user = user;
-    if(timestamp){
+    if (timestamp){
       this.timestamp = timestamp;
     }
   }
-  public toJson(){
+  public toJson(): USERSETTINGS {
     const filterDate: () => string = (): string => {
-      if(this.timestamp === null){
-        return moment().tz('Asia/tokyo').toISOString()
+      if (this.timestamp === null){
+        const now: string = moment().format('YYYY-MM-DD');
+        return moment(now).toISOString();
       }
       return this.timestamp.toISODate();
-    }
-    const settings = {
+    };
+    console.log(filterDate());
+    const settings: USERSETTINGS = {
       userId: this.user.toString(),
       filterDate: filterDate()
-    }
+    };
     return settings;
   }
 }

@@ -1,3 +1,6 @@
+export interface SEARCHKEY {
+  userId: string;
+}
 
 export class VOUser {
   private user: string;
@@ -10,5 +13,11 @@ export class VOUser {
   }
   public toString(): string {
     return this.user;
+  }
+  public toSearchKey(): SEARCHKEY {
+    const user = {
+      userId: this.user
+    };
+    return user;
   }
 }

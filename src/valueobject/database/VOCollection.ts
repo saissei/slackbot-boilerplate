@@ -27,7 +27,7 @@ export class VOCollection {
     this.data = data;
   }
   public toCollectData(): COLLECTED {
-    const nowDatetime: Moment = moment().tz('Asia/tokyo');
+    const nowDatetime: Moment = moment();
 
     if (this.data.timestamp === undefined){
       const collectData: COLLECTED = {

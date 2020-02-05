@@ -8,10 +8,10 @@ type MODAL = {
   view: string;
 };
 
-export class VOModal {
+export class VONoteModal {
   private modal: MODAL;
 
-  public static stickieModal(triggerId: VOTriggerId, tags: VOOptionTags): VOModal {
+  public static stickieModal(triggerId: VOTriggerId, tags: VOOptionTags): VONoteModal {
     const modal = {
       'type': 'modal',
       'callback_id': 'add_note',
@@ -123,18 +123,19 @@ export class VOModal {
     const optiontag = tags.toJson();
     if (optiontag.length !== 0){
       const selectOption = {
-        'type': 'section',
+        'type': 'input',
         'block_id': 'tags',
-        'text': {
-          'type': 'mrkdwn',
-          'text': 'タグを選択して下さい'
+        'label': {
+          'type': 'plain_text',
+          'text': 'Tags',
+          'emoji': true
         },
-        'accessory': {
+        'element': {
           'type': 'multi_static_select',
-          'block_id': 'data',
+          'action_id': 'tags',
           'placeholder': {
             'type': 'plain_text',
-            'text': 'Select items',
+            'text': 'Select tags',
             'emoji': true
           },
           'options': optiontag
@@ -147,13 +148,13 @@ export class VOModal {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     modal.blocks.push(...footer);
+    console.log(JSON.stringify(modal));
 
     const args: MODAL = {
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      trigger_id: triggerId.toString(),
+      'trigger_id': triggerId.toString(),
       view: JSON.stringify(modal)
     };
-    return new VOModal(args);
+    return new VONoteModal(args);
   }
 
   private constructor(modal: MODAL){

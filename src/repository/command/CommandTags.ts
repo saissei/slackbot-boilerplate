@@ -2,7 +2,7 @@ import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
-import { VODBTags, TAGS } from '../../valueobject/database/VODBTags';
+import { VOTags, INPUTTAG } from '../../valueobject/VOTags';
 
 interface DBCONFIG {
   host: string;
@@ -27,10 +27,12 @@ export class CommandTags {
   private constructor(articles: ICollection){
     this.articles = articles;
   }
-  public async collect(tagData: VODBTags): Promise<void> {
-    const tag: TAGS = tagData.toJson();
+  public async collect(tagData: VOTags): Promise<void> {
+    const tag: Array<INPUTTAG> = tagData.toJsonArray();
     try {
-      await this.articles.insert(tag);
+      for (let i = 0; i <= CommandTags.length; i++){
+        await this.articles.insert(tag[i]);
+      }
       return;
     } catch (err) {
       logger.systemInfo('error happened at collect tag data');

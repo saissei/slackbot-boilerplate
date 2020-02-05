@@ -32,7 +32,7 @@ export class VOMemo {
   private memo: INPUTMEMO;
   public static of(view: SUBMITVIEW, userId: VOUser, userName: VOUserName): VOMemo {
     const viewData = view.state.values;
-    const now: string = moment().tz('Asia/tokyo').toISOString();
+    const now: string = moment().toISOString();
     const httpRegex = new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$','i');
     const url = (): string => {
       if (httpRegex.test(viewData.url.data.value)) {
@@ -40,11 +40,20 @@ export class VOMemo {
       }
       return '';
     };
+    console.log(viewData.tags.tags);
+    const tags = (): Array<string> => {
+      if (viewData.tags.tags.selected_options.length === 0){
+        return [];
+      }
+      return viewData.tags.tags.selected_options.map(item => {
+        return item.value;
+      });
+    };
     const memo: INPUTMEMO = {
       'space': view.team_id,
       'userId': userId.toString(),
       'userName': userName.toString(),
-      'tag': [],
+      'tag': tags(),
       'title': viewData.title.data.value,
       'url': url(),
       'description': viewData.description.data.value,
