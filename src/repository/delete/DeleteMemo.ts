@@ -1,22 +1,16 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
 import { VOContentId, CONTENTID } from '../../valueobject/VOContentId';
-
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export class DeleteMemo {
   private articles: ICollection;
   private static _instance: DeleteMemo | null = null;
   public static get instance(): DeleteMemo {
     if ( this._instance === null ) {
-      const dbconfig = config.get<DBCONFIG>('database');
-      const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const conf: VODBConfig = VODBConfig.default();
+      const uri: string = conf.uriTostring();
       const db = monk(uri);
       const articles: ICollection = db.get('memo');
       this._instance = new DeleteMemo(articles);

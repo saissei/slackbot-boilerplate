@@ -1,15 +1,8 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
 import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
-
-
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 interface TAGSOBJECT {
   type: string;
@@ -35,8 +28,8 @@ export class QueryTags {
   private static _instance: QueryTags | null = null;
   public static get instance(): QueryTags {
     if ( this._instance === null ) {
-      const dbconfig = config.get<DBCONFIG>('database');
-      const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const conf: VODBConfig = VODBConfig.default();
+      const uri: string = conf.uriTostring();
       const db = monk(uri);
       const articles: ICollection = db.get('tags');
       this._instance = new QueryTags(articles);

@@ -1,22 +1,16 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
 import { VOTags, INPUTTAG } from '../../valueobject/VOTags';
-
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export class CommandTags {
   private articles: ICollection;
   private static _instance: CommandTags | null = null;
   public static get instance(): CommandTags {
     if ( this._instance === null ) {
-      const dbconfig = config.get<DBCONFIG>('database');
-      const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const conf: VODBConfig = VODBConfig.default();
+      const uri: string = conf.uriTostring();
       const db = monk(uri);
       const articles: ICollection = db.get('tags');
       this._instance = new CommandTags(articles);

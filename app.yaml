@@ -1,0 +1,12 @@
+entrypoint: yarn ./dist/server/www.js
+env: flex
+service: flex
+runtime: nodejs
+vm: true
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2
+
+resources:
+  cpu: .5
+  memory_gb: 3

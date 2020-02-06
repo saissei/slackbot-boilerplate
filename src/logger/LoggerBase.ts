@@ -6,7 +6,56 @@ class Logger {
   private log4js: Log4js.Log4js;
 
   public constructor() {
-    const _conf: Log4js.Configuration = VOLoggerConfig.of().toJSON();
+    const loggerConfig: VOLoggerConfig | undefined = VOLoggerConfig.of();
+    if (loggerConfig === undefined){
+      const defaultConfig: Log4js.Configuration = {
+        'appenders': {
+          'access': {
+            'type': 'dateFile',
+            'filename': './logs/access.log',
+            'daysToKeep': 7
+          },
+          'error': {
+            'type': 'dateFile',
+            'filename': './logs/error.log',
+            'daysToKeep': 7
+          },
+          'system': {
+            'type': 'dateFile',
+            'filename': './logs/system.log',
+            'daysToKeep': 7
+          },
+          'stdout': {
+            'type': 'stdout'
+          }
+        },
+        'categories': {
+          'default': {
+            'appenders': ['access', 'stdout'],
+            'level': 'INFO'
+          },
+          'access': {
+            'appenders': ['access', 'stdout'],
+            'level': 'INFO'
+          },
+          'system': {
+            'appenders': ['system', 'stdout'],
+            'level': 'ALL'
+          },
+          'error': {
+            'appenders': ['error', 'stdout'],
+            'level': 'ERROR'
+          },
+          'debug': {
+            'appenders': ['stdout'],
+            'level': 'ALL'
+          }
+        }
+      };
+      this.log4js = Log4js.configure(defaultConfig);
+      return;
+    };
+    const _conf: Log4js.Configuration = loggerConfig.toJSON();
     this.log4js = Log4js.configure(_conf);
   }
 

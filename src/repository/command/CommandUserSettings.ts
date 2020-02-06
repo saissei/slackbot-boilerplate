@@ -1,14 +1,9 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
 import { VOUserSettings } from '../../valueobject/VOUserSettings';
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
 
 
 export class CommandUserSettings {
@@ -16,8 +11,8 @@ export class CommandUserSettings {
   private static _instance: CommandUserSettings | null = null;
   public static get instance(): CommandUserSettings {
     if ( this._instance === null ) {
-      const dbconfig = config.get<DBCONFIG>('database');
-      const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const conf: VODBConfig = VODBConfig.default();
+      const uri: string = conf.uriTostring();
       const db = monk(uri);
       const articles: ICollection = db.get('usersettings');
       this._instance = new CommandUserSettings(articles);

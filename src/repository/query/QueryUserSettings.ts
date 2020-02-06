@@ -1,15 +1,9 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import { USERSETTINGS } from '../../valueobject/VOUserSettings';
 import logger from '../../logger/LoggerBase';
 import { VOUser, SEARCHKEY } from '../../valueobject/VOUser';
-
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export interface COLLECTEDSETTING extends USERSETTINGS {
   _id: string;
@@ -20,8 +14,8 @@ export class QueryUserSettings {
   private static _instance: QueryUserSettings | null = null;
   public static get instance(): QueryUserSettings {
     if ( this._instance === null ) {
-      const dbconfig = config.get<DBCONFIG>('database');
-      const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const conf: VODBConfig = VODBConfig.default();
+      const uri: string = conf.uriTostring();
       const db = monk(uri);
       const articles: ICollection = db.get('usersettings');
       this._instance = new QueryUserSettings(articles);

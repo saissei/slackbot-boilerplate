@@ -1,10 +1,13 @@
 {
   "name": "slack-memo-bot",
-  "version": "1.0.0",
+  "version": "0.0.9",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
-    "dev": "npx ts-node-dev ./src/server/www.ts",
+    "dev": "NODE_ENV=development npx ts-node-dev ./src/server/www.ts",
     "start-local": "npx pm2 start pm2.config.json --env production",
-    "start": "node ./dist/server/www.js",
+    "start": "NODE_ENV=production node ./dist/server/www.js",
     "lint": "eslint 'src/**/*.ts{,x}' --fix",
     "build": "npx gulp build --output-dir public",
     "test": "npx jest test --no-cache --silent=false --verbose true --coverage"

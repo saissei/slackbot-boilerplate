@@ -1,4 +1,3 @@
-import config from 'config';
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
@@ -6,14 +5,7 @@ import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
 import { VOContentId, CONTENTID } from '../../valueobject/VOContentId';
 import { VODateTime, UPDATEKEYVALUE } from '../../valueobject/VODateTime';
 import { VOUser } from '../../valueobject/VOUser';
-
-
-
-interface DBCONFIG {
-  host: string;
-  port: string;
-  database: string;
-}
+import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export interface COLLECTED {
   _id: string;
@@ -34,8 +26,8 @@ export class QueryMemo {
     private static _instance: QueryMemo | null = null;
     public static get instance(): QueryMemo {
       if ( this._instance === null ) {
-        const dbconfig = config.get<DBCONFIG>('database');
-        const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+        const conf: VODBConfig = VODBConfig.default();
+        const uri: string = conf.uriTostring();
         const db = monk(uri);
         const articles: ICollection = db.get('memo');
         this._instance = new QueryMemo(articles);
