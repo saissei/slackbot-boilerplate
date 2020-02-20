@@ -1,5 +1,5 @@
-import { VOUser } from './VOUser';
-import { VOConfig } from './VOSlackConfig';
+import { VOUser } from './slack/VOUser';
+import { VOConfig } from './slack/VOSlackConfig';
 import { VOAppHomeContent, BLOCKCONTENT } from './VOAppHomeContent';
 import { VODateTime } from './VODateTime';
 

@@ -1,5 +1,5 @@
 import { SUBMITVIEW } from '../controller/buttonHandler/SubmissionController';
-import { VOUser } from './VOUser';
+import { VOUser } from './slack/VOUser';
 import moment from 'moment-timezone';
 import { VOUserName } from './VOUserName';
 
@@ -40,7 +40,6 @@ export class VOMemo {
       }
       return '';
     };
-    console.log(viewData.tags.tags);
     const tags = (): Array<string> => {
       if (viewData.tags.tags.selected_options.length === 0){
         return [];

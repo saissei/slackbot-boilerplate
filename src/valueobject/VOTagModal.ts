@@ -1,5 +1,5 @@
 import { VOTriggerId } from './VOTriggerId';
-import { VOConfig } from './VOSlackConfig';
+import { VOConfig } from './slack/VOSlackConfig';
 
 type MODAL = {
   token?: string;

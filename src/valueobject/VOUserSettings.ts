@@ -1,4 +1,4 @@
-import { VOUser } from './VOUser';
+import { VOUser } from './slack/VOUser';
 import { VODateTime } from './VODateTime';
 import moment = require('moment-timezone');
 
@@ -33,7 +33,6 @@ export class VOUserSettings {
       }
       return this.timestamp.toISODate();
     };
-    console.log(filterDate());
     const settings: USERSETTINGS = {
       userId: this.user.toString(),
       filterDate: filterDate()

@@ -8,8 +8,8 @@ import { SubmissionController } from '../buttonHandler/SubmissionController';
 import { QueryTags } from '../../repository/query/QueryTags';
 import { CommandUserSettings } from '../../repository/command/CommandUserSettings';
 import { VOOptionTags } from '../../valueobject/VOOptionTags';
-import { VOUser } from '../../valueobject/VOUser';
-import { VOSpaceId } from '../../valueobject/VOSpaceId';
+import { VOUser } from '../../valueobject/slack/VOUser';
+import { VOSpaceId } from '../../valueobject/slack/VOSpaceId';
 import { DeleteMemo } from '../../repository/delete/DeleteMemo';
 import { VOContentId } from '../../valueobject/VOContentId';
 import { VOUserName } from '../../valueobject/VOUserName';
@@ -20,7 +20,6 @@ import { VOTagModal } from '../../valueobject/VOTagModal';
 import moment = require('moment-timezone');
 import logger from '../../logger/LoggerBase';
 
-const slack: Slack | undefined = Slack.instance;
 const queryTags: QueryTags = QueryTags.instance;
 const commandSettings: CommandUserSettings = CommandUserSettings.instance;
 const deleteMemo: DeleteMemo = DeleteMemo.instance;
@@ -28,12 +27,10 @@ const querySettings: QueryUserSettings = QueryUserSettings.instance;
 
 export class ActionsHandler {
   public static async switcher(req: Request, res: Response): Promise<void>{
-    if (!slack){
-      return;
-    }
 
     // eslint-disable-next-line @typescript-eslint/camelcase
     const { trigger_id, user, actions, type, team } = JSON.parse(req.body.payload);
+
     const voTriggerId: VOTriggerId | undefined = VOTriggerId.of(trigger_id);
     if (voTriggerId === undefined){
       return;
@@ -44,19 +41,22 @@ export class ActionsHandler {
     const vouserId: VOUser = VOUser.of(user.id);
     const vouserName: VOUserName = VOUserName.of(user.username);
     const voActions: VOActions | undefined = VOActions.of(actions);
+
+    const slack: Slack | undefined = await Slack.of(space);
+    if (!slack){
+      return;
+    }
     /** action typeによってactionの内容を確認 */
     if (type === 'view_submission'){
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { view } = JSON.parse(req.body.payload);
       res.send('');
       await SubmissionController.handle(vouserName, vouserId, view);
       return;
     }
+
     if (voActions === undefined){
       return;
     }
-
 
     if (voActions.checkArraylength() === 0){
       return;
@@ -98,7 +98,6 @@ export class ActionsHandler {
         return;
       }
       case 'filter_date': {
-        console.log('filter_date!');
         const actionObject = voActions.extractObject();
         const filterDate = VODateTime.of(actionObject.selected_date);
         const vouserId: VOUser = VOUser.of(user.id);

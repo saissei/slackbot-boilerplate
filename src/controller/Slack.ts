@@ -1,10 +1,10 @@
-import { VOUser } from '../valueobject/VOUser';
-import { VOConfig } from '../valueobject/VOSlackConfig';
+import { VOUser } from '../valueobject/slack/VOUser';
+import { VOConfig } from '../valueobject/slack/VOSlackConfig';
 import { VOHomeApp } from '../valueobject/VOHomeApp';
 import { HomeApp } from '../presenter/HomeApp';
 import { Modal } from '../presenter/Modal';
 import { VONoteModal } from '../valueobject/VONoteModal';
-import { VOSpaceId } from '../valueobject/VOSpaceId';
+import { VOSpaceId } from '../valueobject/slack/VOSpaceId';
 import { QueryMemo, COLLECTED } from '../repository/query/QueryMemo';
 import { VOAppHomeContent } from '../valueobject/VOAppHomeContent';
 import { VODateTime } from '../valueobject/VODateTime';
@@ -15,17 +15,12 @@ const query: QueryMemo = QueryMemo.instance;
 
 export class Slack {
   private slackConfig: VOConfig;
-  private static _instance: Slack | null = null;
-  public static get instance(): Slack | undefined {
-    if (this._instance === null){
-      const config: VOConfig | undefined = VOConfig.of();
-      if (!config){
+  public static async of(teamId: VOSpaceId): Promise<Slack | undefined> {
+    const config: VOConfig | undefined = await VOConfig.of(teamId);
+    if (!config){
         return;
-      }
-      this._instance = new Slack(config);
-      return this._instance;
     }
-    return this._instance;
+    return new Slack(config);
   }
   private constructor(config: VOConfig){
     this.slackConfig = config;
@@ -46,6 +41,9 @@ export class Slack {
           }
         }
         if ( check === true && item.userId === user.toString()){
+          return item;
+        }
+        if (!check) {
           return item;
         }
       });
@@ -69,17 +67,16 @@ export class Slack {
     try {
       await Modal.send(modal);
     } catch (err) {
-      console.log(err);
+      logger.systemError(err);
       return;
     }
   }
   public async sendNewtagModal(modal: VONoteModal|VOTagModal): Promise<void> {
     modal.ofToken(this.slackConfig);
-    console.log(modal.toJSON());
     try {
       await Modal.send(modal);
     } catch (err) {
-      console.log(err);
+      logger.systemError(err);
       return;
     }
   }

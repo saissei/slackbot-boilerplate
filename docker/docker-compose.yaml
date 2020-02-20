@@ -6,11 +6,11 @@ services:
       dockerfile: ./docker/Dockerfile
     environment:
       NODE_ENV: production
-    image: slack-memo-bot:v0.0.9
+    image: zbbk8sdevelop.azurecr.io/slack-memo-bot:v1.0.4
     container_name: memo-bot
     volumes:
       - ../config:/app/config
     environment:
       NODE_ENV: production
     ports:
-      - 80:80
+      - 10002:10002

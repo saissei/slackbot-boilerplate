@@ -2,7 +2,7 @@ import monk, { ICollection } from 'monk';
 
 import { USERSETTINGS } from '../../valueobject/VOUserSettings';
 import logger from '../../logger/LoggerBase';
-import { VOUser, SEARCHKEY } from '../../valueobject/VOUser';
+import { VOUser, SEARCHKEY } from '../../valueobject/slack/VOUser';
 import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export interface COLLECTEDSETTING extends USERSETTINGS {

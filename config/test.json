@@ -1,11 +1,14 @@
 {
   "slack_config": {
-    "signingSecret": "signingSecret",
-    "token": "token"
+    "signingSecret": "signinSecret",
+    "token": "botToken",
+    "clientId": "clientId",
+    "clientSecret": "ClientSecret"
   },
   "database": {
-    "host": "hostname",
-    "port": "access port",
-    "database": "database name"
-  }
+    "host": "localhost",
+    "port": "27017",
+    "database": "memobot"
+  },
+  "serverHost": "serverDomain"
 }

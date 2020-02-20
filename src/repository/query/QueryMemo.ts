@@ -1,10 +1,10 @@
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
-import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
+import { VOSpaceId, SPACEID } from '../../valueobject/slack/VOSpaceId';
 import { VOContentId, CONTENTID } from '../../valueobject/VOContentId';
 import { VODateTime, UPDATEKEYVALUE } from '../../valueobject/VODateTime';
-import { VOUser } from '../../valueobject/VOUser';
+import { VOUser } from '../../valueobject/slack/VOUser';
 import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 export interface COLLECTED {
@@ -47,6 +47,7 @@ export class QueryMemo {
             space: spaceId.space,
             update: userSetting.update
           };
+
           const memo: Array<COLLECTED> = await this.articles.find(searchQuery);
           return memo;
         } catch (err) {

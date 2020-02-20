@@ -1,5 +1,5 @@
 import { VOTriggerId } from './VOTriggerId';
-import { VOConfig } from './VOSlackConfig';
+import { VOConfig } from './slack/VOSlackConfig';
 import { VOOptionTags } from './VOOptionTags';
 
 type MODAL = {
@@ -148,7 +148,6 @@ export class VONoteModal {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     modal.blocks.push(...footer);
-    console.log(JSON.stringify(modal));
 
     const args: MODAL = {
       'trigger_id': triggerId.toString(),

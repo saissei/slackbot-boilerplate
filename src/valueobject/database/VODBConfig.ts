@@ -13,10 +13,10 @@ export class VODBConfig {
   public static default(): VODBConfig {
     const dbconfig: DBCONFIG = config.get<DBCONFIG>('database');
     if (dbconfig.username !== undefined && dbconfig.password !== undefined){
-      const uri = `${dbconfig.username}:${dbconfig.password}@${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+      const uri = `${dbconfig.username}:${dbconfig.password}@${dbconfig.host}:${dbconfig.port}/${dbconfig.database}?retryWrites=true&w=majority`;
       return new VODBConfig(uri);
     }
-    const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}`;
+    const uri = `${dbconfig.host}:${dbconfig.port}/${dbconfig.database}?retryWrites=true&w=majority`;
     return new VODBConfig(uri);
   }
   private constructor(uri: string){

@@ -30,7 +30,6 @@ export class VODateTime {
         '$lte': end
       }
     };
-    console.log(kv);
     return kv;
   }
   public toISODate(): string {

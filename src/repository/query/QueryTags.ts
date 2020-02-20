@@ -1,7 +1,7 @@
 import monk, { ICollection } from 'monk';
 
 import logger from '../../logger/LoggerBase';
-import { VOSpaceId, SPACEID } from '../../valueobject/VOSpaceId';
+import { VOSpaceId, SPACEID } from '../../valueobject/slack/VOSpaceId';
 import { VODBConfig } from '../../valueobject/database/VODBConfig';
 
 interface TAGSOBJECT {

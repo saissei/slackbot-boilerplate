@@ -13,7 +13,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-stati
 
 RUN yarn install --production && yarn cache clean
 
-EXPOSE 80
+EXPOSE 10002
 RUN chmod +x /tini
 
 ENTRYPOINT ["/tini", "--"]

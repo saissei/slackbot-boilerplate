@@ -24,7 +24,6 @@ export class HomeApp {
   public static async updateHome(homeApp: VOHomeApp, setting: VODateTime): Promise<void> {
     try {
       const view = homeApp.updateView(setting);
-      console.log(view);
       await axios.post(`${url}/views.update`, qs.stringify(view));
       return;
     } catch (err) {

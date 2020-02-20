@@ -1,6 +1,9 @@
 export interface SPACEID {
   space: string;
 }
+export interface SEARCHKEY {
+  teamId: string;
+}
 
 export class VOSpaceId {
   private id: SPACEID;
@@ -15,5 +18,11 @@ export class VOSpaceId {
   }
   public toJson(): SPACEID {
     return this.id;
+  }
+  public toSearchKey(): SEARCHKEY {
+    const teamId = {
+      teamId: this.id.space
+    };
+    return teamId;
   }
 }
