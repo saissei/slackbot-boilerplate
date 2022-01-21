@@ -48,7 +48,7 @@
     "cookie-parser": "1.4.4",
     "dotenv": "8.2.0",
     "helmet": "3.21.2",
-    "log4js": "6.1.0",
+    "log4js": "6.4.0",
     "moment-timezone": "0.5.27",
     "monk": "7.1.2",
     "qs": "6.9.1"
